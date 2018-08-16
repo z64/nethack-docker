@@ -28,14 +28,12 @@ sed -i -e "/^CFLAGS/s/-O/-Os -fomit-frame-pointer/" hints && \
 RUN HOME= make
 RUN HOME= make install
 
-WORKDIR /nh/install
-ADD assets/ /nh/install/
-
 FROM gliderlabs/alpine:latest
 
 RUN apk-install ncurses
 
 COPY --from=0 /nh/install /
+COPY .nethackrc /root
 
 VOLUME /nh360/var/
 
