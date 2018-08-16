@@ -31,5 +31,12 @@ RUN HOME= make install
 WORKDIR /nh/install
 ADD assets/ /nh/install/
 
-# CMD ["/nh/install/games/nethack"]
-CMD tar cz .
+FROM gliderlabs/alpine:latest
+
+RUN apk-install ncurses
+
+COPY --from=0 /nh/install /
+
+VOLUME /nh360/var/
+
+CMD ["/games/nethack"]
