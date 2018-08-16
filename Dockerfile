@@ -9,17 +9,17 @@ linux-headers \
 make \
 ncurses-dev
 
-RUN wget -O- http://jaist.dl.sourceforge.net/project/nethack/nethack/3.6.0/nethack-360-src.tgz \
+RUN wget -O- http://jaist.dl.sourceforge.net/project/nethack/nethack/3.6.1/nethack-361-src.tgz \
 | tar xzv
 
-WORKDIR /nethack-3.6.0/
+WORKDIR /nethack-3.6.1/
 
 # set the syntax for flex and cp in the hints file
 # and use a fixed directory
 RUN cat sys/unix/hints/linux-chroot > hints && \
 echo '#-POST' >> hints && \
 echo 'LEX = flex' >> hints && \
-sed -i -e 's/^HACKDIR=.*/HACKDIR=\/nh360/' hints && \
+sed -i -e 's/^HACKDIR=.*/HACKDIR=\/nh361/' hints && \
 sed -i -e 's/cp -n/cp /g' hints && \
 sed -i -e "/^CFLAGS/s/-O/-Os -fomit-frame-pointer/" hints && \
 ./sys/unix/setup.sh hints
@@ -35,6 +35,6 @@ RUN apk add ncurses
 COPY --from=0 /nh/install /
 COPY .nethackrc /root
 
-VOLUME /nh360/var/
+VOLUME /nh361/var/
 
 CMD ["/games/nethack"]
