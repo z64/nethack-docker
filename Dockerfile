@@ -1,6 +1,6 @@
-FROM gliderlabs/alpine:latest
+FROM alpine:edge
 
-RUN apk-install \
+RUN apk add \
 byacc \
 flex \
 gcc \
@@ -28,9 +28,9 @@ sed -i -e "/^CFLAGS/s/-O/-Os -fomit-frame-pointer/" hints && \
 RUN HOME= make
 RUN HOME= make install
 
-FROM gliderlabs/alpine:latest
+FROM alpine:edge
 
-RUN apk-install ncurses
+RUN apk add ncurses
 
 COPY --from=0 /nh/install /
 COPY .nethackrc /root
